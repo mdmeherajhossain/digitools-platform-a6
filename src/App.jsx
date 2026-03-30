@@ -21,6 +21,29 @@ function App() {
       <Navbar cartCount={cart.length} />
       <Banner />
       <Stats />
+        <div className="text-center my-20">
+        <h2 className="text-4xl font-bold mb-4">Premium Digital Tools</h2>
+        <p className="text-gray-500 mb-10 max-w-lg mx-auto">
+          Choose from our curated collection to boost your productivity.
+        </p>
+        
+        <div className="inline-flex bg-gray-100 p-2 rounded-2xl gap-2">
+
+          <button 
+            onClick={() => setIsActive("products")} 
+            className={`btn rounded-xl px-12 ${isActive === "products" ? "bg-[#9538E2] text-white border-none" : "btn-ghost text-gray-500"}`}
+          >
+            Products
+          </button>
+          
+          <button 
+            onClick={() => setIsActive("cart")} 
+            className={`btn rounded-xl px-12 ${isActive === "cart" ? "bg-[#9538E2] text-white border-none" : "btn-ghost text-gray-500"}`}
+          >
+            Cart ({cart.length})
+          </button>
+        </div>
+      </div>
   
 
       <ToastContainer position="top-center" autoClose={2000} hideProgressBar />
