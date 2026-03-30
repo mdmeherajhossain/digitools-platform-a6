@@ -7,6 +7,7 @@ import Navbar from "./components/navbar";
 import Banner from "./components/banner";
 import Stats from "./components/stats";
 import ProductCard from "./components/productCard";
+import Steps from './components/Steps';
 
 function App() {
   const [products] = useState(productsData);
