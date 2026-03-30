@@ -1,5 +1,19 @@
+import { useState } from "react";
+
 const ProductCard = ({ product, handleAddToCart }) => {
   const { name, description, price, period, tag, tagType, features, icon } = product;
+  
+  const [isAdded, setIsAdded] = useState(false);
+
+  const handleClick = () => {
+    handleAddToCart?.(product);
+    
+    setIsAdded(true);
+
+    setTimeout(() => {
+      setIsAdded(false);
+    }, 2000);
+  };
 
   return (
     <div className="card bg-white border border-gray-100 p-8 rounded-[40px] relative hover:shadow-xl transition-all h-full flex flex-col">
@@ -35,10 +49,13 @@ const ProductCard = ({ product, handleAddToCart }) => {
 
       <button 
         type="button"
-        onClick={() => handleAddToCart?.(product)} 
-        className="btn bg-[#9538E2] text-white w-full rounded-2xl border-none h-14 font-bold hover:bg-[#832fd6]"
+        onClick={handleClick} 
+        className={`btn w-full rounded-2xl border-none h-14 font-bold transition-all duration-300 ${
+          isAdded 
+            ? "bg-green-500 text-white hover:bg-green-600"
+            : "bg-[#9538E2] text-white hover:bg-[#832fd6]" }`}
       >
-        Buy Now
+        {isAdded ? "Added to Cart! ✓" : "Buy Now"}
       </button>
     </div>
   );
