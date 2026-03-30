@@ -7,13 +7,16 @@ import Navbar from "./components/navbar";
 import Banner from "./components/banner";
 import Stats from "./components/stats";
 import ProductCard from "./components/productCard";
-import Steps from './components/Steps';
+import Steps from "./components/steps";
+import Pricing from "./components/pricing";
+import Footer from "./components/footer";
 
 function App() {
   const [products] = useState(productsData);
   const [cart, setCart] = useState([]);
   const [isActive, setIsActive] = useState("products");
-   const handleAddToCart = (product) => {
+
+  const handleAddToCart = (product) => {
     if (cart.find((item) => item.id === product.id)) {
       toast.warning("Already added to cart!");
     } else {
@@ -35,27 +38,22 @@ function App() {
 
   const totalPrice = cart.reduce((total, item) => total + item.price, 0);
 
-
-   return (
+  return (
     <div className="max-w-[1440px] mx-auto font-poppins">
       <Navbar cartCount={cart.length} />
       <Banner />
       <Stats />
-        <div className="text-center my-20">
+      
+      {/* Products vs Cart Toggle Buttons */}
+      <div className="text-center my-20">
         <h2 className="text-4xl font-bold mb-4">Premium Digital Tools</h2>
-        <p className="text-gray-500 mb-10 max-w-lg mx-auto">
-          Choose from our curated collection to boost your productivity.
-        </p>
-        
         <div className="inline-flex bg-gray-100 p-2 rounded-2xl gap-2">
-
           <button 
             onClick={() => setIsActive("products")} 
             className={`btn rounded-xl px-12 ${isActive === "products" ? "bg-[#9538E2] text-white border-none" : "btn-ghost text-gray-500"}`}
           >
             Products
           </button>
-          
           <button 
             onClick={() => setIsActive("cart")} 
             className={`btn rounded-xl px-12 ${isActive === "cart" ? "bg-[#9538E2] text-white border-none" : "btn-ghost text-gray-500"}`}
@@ -63,16 +61,25 @@ function App() {
             Cart ({cart.length})
           </button>
         </div>
-       </div>
-       
-        <div className="px-4 lg:px-10 pb-20">
+      </div>
+
+      {/* Main Content Area */}
+      <div className="px-4 lg:px-10 pb-20">
         {isActive === "products" ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((p) => (
-              <ProductCard key={p.id} product={p} handleAddToCart={handleAddToCart} />
-            ))}
-          </div>
+          <>
+          
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {products.map((p) => (
+                <ProductCard key={p.id} product={p} handleAddToCart={handleAddToCart} />
+              ))}
+            </div>
+
+          
+            <Steps />
+            <Pricing />
+          </>
         ) : (
+          
           <div className="max-w-4xl mx-auto bg-white p-8 rounded-[40px] border border-gray-100 shadow-sm">
             <h3 className="text-2xl font-bold mb-8">Your Cart</h3>
             {cart.length === 0 ? (
@@ -96,7 +103,7 @@ function App() {
                 <div className="mt-10 pt-6 border-t flex justify-between text-2xl font-bold">
                   <span>Total:</span><span>${totalPrice}</span>
                 </div>
-                <button onClick={handleCheckout} className="btn w-full bg-[#9538E2] text-white rounded-full mt-8 h-16 text-lg border-none hover:bg-[#832fd6]">
+                <button onClick={handleCheckout} className="btn w-full bg-[#9538E2] text-white rounded-full mt-8 h-16 text-lg border-none">
                   Proceed to Checkout
                 </button>
               </>
@@ -104,7 +111,9 @@ function App() {
           </div>
         )}
       </div>
-  
+
+      <Footer />
+
       <ToastContainer position="top-center" autoClose={2000} hideProgressBar />
     </div>
   );
